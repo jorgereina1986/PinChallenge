@@ -6,6 +6,8 @@ public class PinsResponse {
 
     @SerializedName("description")
     String description;
+    @SerializedName("images")
+    Images images;
 
     public String getDescription() {
         return description;
@@ -13,5 +15,13 @@ public class PinsResponse {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Images getImages() {
+        return images;
+    }
+
+    public void setImages(Images images) {
+        this.images = images;
     }
 }
