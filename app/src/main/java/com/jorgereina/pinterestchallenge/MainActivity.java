@@ -2,6 +2,7 @@ package com.jorgereina.pinterestchallenge;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     private List<PinsResponse> pinList;
     private RecyclerView pinsRecyclerView;
     private PinsAdapter pinsAdapter;
-    private RecyclerView.LayoutManager layoutManager;
+    private LinearLayoutManager layoutManager;
 
 
 
@@ -33,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        layoutManager = new LinearLayoutManager(this);
+        layoutManager = new GridLayoutManager(this,2);
         pinList = new ArrayList<>();
         pinsAdapter = new PinsAdapter(pinList, getApplicationContext());
         textView = (TextView) findViewById(R.id.text);
@@ -41,24 +42,36 @@ public class MainActivity extends AppCompatActivity {
         pinsRecyclerView.setLayoutManager(layoutManager);
         pinsRecyclerView.setAdapter(pinsAdapter);
 
-        Gson gson = new Gson();
-        Type listType = new TypeToken<List<PinsResponse>>() {
-        }.getType();
-        pinsResponses = gson.fromJson(loadJSONFromAsset(), listType);
+        pinsRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
 
-        for (int i = 0; i < pinsResponses.size(); i++) {
-            pinList.add(pinsResponses.get(i));
-        }
+                if (layoutManager.findLastCompletelyVisibleItemPosition() == pinList.size()-1){
+                    pinList.addAll(pinList);
+                    pinsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
 
-        pinsAdapter.notifyDataSetChanged();
-
-
-        textView.setText(pinList.get(0).getDescription());
-
+        populateJsonDataToRecyclerView();
 
     }
 
-    public String loadJSONFromAsset() {
+    private void populateJsonDataToRecyclerView() {
+
+        Gson gson = new Gson();
+        Type listType = new TypeToken<List<PinsResponse>>() {
+        }.getType();
+
+        pinsResponses = gson.fromJson(loadJSONFromAsset(), listType);
+        pinList.addAll(pinsResponses);
+        pinsAdapter.notifyDataSetChanged();
+
+    }
+
+
+    private String loadJSONFromAsset() {
         String json = null;
         try {
             InputStream is = getApplicationContext().getAssets().open("pins_formatted.json");

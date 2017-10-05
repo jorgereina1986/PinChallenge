@@ -8,6 +8,8 @@ public class PinsResponse {
     String description;
     @SerializedName("images")
     Images images;
+    @SerializedName("title")
+    String title;
 
     public String getDescription() {
         return description;
@@ -23,5 +25,13 @@ public class PinsResponse {
 
     public void setImages(Images images) {
         this.images = images;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
