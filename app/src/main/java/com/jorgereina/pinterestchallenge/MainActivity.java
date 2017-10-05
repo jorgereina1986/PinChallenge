@@ -5,7 +5,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -19,25 +18,25 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private TextView textView;
     private List<PinsResponse> pinsResponses;
     private List<PinsResponse> pinList;
     private RecyclerView pinsRecyclerView;
     private PinsAdapter pinsAdapter;
     private LinearLayoutManager layoutManager;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recyclerViewSetup();
+        populateJsonDataToRecyclerView();
+    }
 
-        layoutManager = new GridLayoutManager(this,2);
+    private void recyclerViewSetup() {
+        layoutManager = new GridLayoutManager(this, 2);
         pinList = new ArrayList<>();
         pinsAdapter = new PinsAdapter(pinList, getApplicationContext());
-        textView = (TextView) findViewById(R.id.text);
         pinsRecyclerView = (RecyclerView) findViewById(R.id.pins_rv);
         pinsRecyclerView.setLayoutManager(layoutManager);
         pinsRecyclerView.setAdapter(pinsAdapter);
@@ -47,15 +46,12 @@ public class MainActivity extends AppCompatActivity {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if (layoutManager.findLastCompletelyVisibleItemPosition() == pinList.size()-1){
+                if (layoutManager.findLastCompletelyVisibleItemPosition() == pinList.size() - 1) {
                     pinList.addAll(pinList);
                     pinsAdapter.notifyDataSetChanged();
                 }
             }
         });
-
-        populateJsonDataToRecyclerView();
-
     }
 
     private void populateJsonDataToRecyclerView() {
@@ -63,11 +59,9 @@ public class MainActivity extends AppCompatActivity {
         Gson gson = new Gson();
         Type listType = new TypeToken<List<PinsResponse>>() {
         }.getType();
-
         pinsResponses = gson.fromJson(loadJSONFromAsset(), listType);
         pinList.addAll(pinsResponses);
         pinsAdapter.notifyDataSetChanged();
-
     }
 
 

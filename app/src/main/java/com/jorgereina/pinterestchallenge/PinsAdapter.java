@@ -32,8 +32,11 @@ public class PinsAdapter extends RecyclerView.Adapter<PinsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-        Picasso.with(context).load(pinsResponses.get(position).getImages().getImage136().getUrl()).into(holder.pinImage);
+        Picasso.with(context)
+                .load(pinsResponses.get(position).getImages().getImage736().getUrl())
+                .into(holder.pinImage);
         holder.titleText.setText(pinsResponses.get(position).getTitle());
+        holder.usernameText.setText(pinsResponses.get(position).getPinner().getUsername());
 
     }
 
@@ -46,12 +49,14 @@ public class PinsAdapter extends RecyclerView.Adapter<PinsAdapter.ViewHolder> {
 
         private ImageView pinImage;
         private TextView titleText;
+        private TextView usernameText;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             pinImage = itemView.findViewById(R.id.pin_iv);
             titleText = itemView.findViewById(R.id.title_text);
+            usernameText = itemView.findViewById(R.id.username_text);
         }
     }
 }

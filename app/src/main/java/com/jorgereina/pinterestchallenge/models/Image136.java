@@ -7,7 +7,7 @@ public class Image136 {
 
     @SerializedName("url")
     @Expose
-    String url;
+    private String url;
 
     public String getUrl() {
         return url;

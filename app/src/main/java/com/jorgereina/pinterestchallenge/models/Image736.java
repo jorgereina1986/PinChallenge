@@ -1,11 +1,13 @@
 package com.jorgereina.pinterestchallenge.models;
 
+import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-class Image736 {
+public class Image736 {
 
     @SerializedName("url")
-    String url;
+    @Expose
+    private String url;
 
     public String getUrl() {
         return url;

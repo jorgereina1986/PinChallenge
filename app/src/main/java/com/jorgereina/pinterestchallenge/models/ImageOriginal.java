@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName;
 class ImageOriginal {
 
     @SerializedName("url")
-    String url;
+    private String url;
 
     public String getUrl() {
         return url;

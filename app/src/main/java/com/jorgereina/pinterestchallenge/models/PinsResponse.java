@@ -5,11 +5,21 @@ import com.google.gson.annotations.SerializedName;
 public class PinsResponse {
 
     @SerializedName("description")
-    String description;
+    private String description;
     @SerializedName("images")
-    Images images;
+    private Images images;
     @SerializedName("title")
-    String title;
+    private String title;
+    @SerializedName("pinner")
+    private Pinner pinner;
+
+    public Pinner getPinner() {
+        return pinner;
+    }
+
+    public void setPinner(Pinner pinner) {
+        this.pinner = pinner;
+    }
 
     public String getDescription() {
         return description;
