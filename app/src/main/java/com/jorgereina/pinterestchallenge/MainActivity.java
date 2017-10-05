@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
         pinsAdapter.notifyDataSetChanged();
     }
 
-
     private String loadJSONFromAsset() {
+
         String json = null;
         try {
             InputStream is = getApplicationContext().getAssets().open("pins_formatted.json");

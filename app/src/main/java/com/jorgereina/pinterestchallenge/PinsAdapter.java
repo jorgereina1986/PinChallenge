@@ -34,6 +34,8 @@ public class PinsAdapter extends RecyclerView.Adapter<PinsAdapter.ViewHolder> {
 
         Picasso.with(context)
                 .load(pinsResponses.get(position).getImages().getImage736().getUrl())
+                .resize(600,400)
+                .centerCrop()
                 .into(holder.pinImage);
         holder.titleText.setText(pinsResponses.get(position).getTitle());
         holder.usernameText.setText(pinsResponses.get(position).getPinner().getUsername());
